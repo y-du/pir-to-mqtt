@@ -1,13 +1,13 @@
 config.h
 
-	#define WIFI_SSID "Your SSID"
-	#define WIFI_PASSWORD "Your Password"
-	#define MQTT_SERVER "IP Address of MQTT Server"
+	#define WIFI_SSID "YOUR SSID"
+	#define WIFI_PASSWORD "YOUR PASSWORD"
+	#define MQTT_SERVER "MQTT SERVER IP"
 	#define MQTT_PORT 1883
 	#define MQTT_RECONNECT 5000
-	#define MQTT_CLIENT_ID "PIR-"
 	#define MQTT_TOPIC "event"
-	#define PIR_ID "PIR001"
+	#define PIR_ID "YOUR PIR ID"
 	#define SRV_ID "motion"
-	#define PUP_INTERVAL 1500
+	#define PUP_INTERVAL 5000
 	#define PIR_INIT_TIME 45000
+	#define LOOP_DELAY 250
