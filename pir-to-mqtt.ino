@@ -104,5 +104,5 @@ void loop() {
       }
     }
   }
-  delay(100);
+  delay(LOOP_DELAY);
 }
