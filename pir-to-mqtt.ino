@@ -34,30 +34,26 @@ void setupWifi() {
   WiFi.hostname(client_id);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-     digitalWrite(led_pin, LOW);
-     delay(250);
-     digitalWrite(led_pin, HIGH);
-     delay(250);
+     delay(LOOP_DELAY);
   }
 }
 
 
 boolean reconnect() {
-    digitalWrite(led_pin, LOW);
     mqtt_client.connect(client_id.c_str());
-    digitalWrite(led_pin, HIGH);
     return mqtt_client.connected();
   }
 
 
 void setup() {
   pinMode(led_pin, OUTPUT);
-  digitalWrite(led_pin, HIGH);
+  digitalWrite(led_pin, LOW);
   pinMode(pir_pin, INPUT);
-  setupWifi();
   randomSeed(micros());
   client_id += "-" + String(random(0xffff), HEX);
   mqtt_client.setServer(MQTT_SERVER, MQTT_PORT);
+  setupWifi();
+  digitalWrite(led_pin, HIGH);
 }
 
 
@@ -76,6 +72,9 @@ void loop() {
       last_reconnect = now;
       if (reconnect()) {
         last_reconnect = 0;
+        digitalWrite(led_pin, LOW);
+        delay(100);
+        digitalWrite(led_pin, HIGH);
       }
     }
   } else {
