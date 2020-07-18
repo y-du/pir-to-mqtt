@@ -22,7 +22,7 @@
 
 const byte pir_pin{3};
 const byte led_pin{1};
-String client_id{MQTT_CLIENT_ID};
+String client_id{PIR_ID};
 
 
 WiFiClient esp_client;
@@ -31,6 +31,7 @@ PubSubClient mqtt_client(esp_client);
 
 void setupWifi() {
   WiFi.mode(WIFI_STA);
+  WiFi.hostname(client_id);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
      digitalWrite(led_pin, LOW);
@@ -55,7 +56,7 @@ void setup() {
   pinMode(pir_pin, INPUT);
   setupWifi();
   randomSeed(micros());
-  client_id += String(random(0xffff), HEX);
+  client_id += "-" + String(random(0xffff), HEX);
   mqtt_client.setServer(MQTT_SERVER, MQTT_PORT);
 }
 
