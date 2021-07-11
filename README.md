@@ -8,6 +8,8 @@ config.h
 	#define MQTT_TOPIC "event"
 	#define PIR_ID "YOUR PIR ID"
 	#define SRV_ID "motion"
-	#define PUP_INTERVAL 5000
+	#define PUP_INTERVAL 2000
 	#define PIR_INIT_TIME 45000
-	#define LOOP_DELAY 250
+	#define LOOP_DELAY 100
+	#define DET_DELAY 1500
+	#define DET_LOOP_DELAY 50
