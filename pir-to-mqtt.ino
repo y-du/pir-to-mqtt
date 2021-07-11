@@ -98,9 +98,6 @@ void loop() {
     } else {
       if (millis() >= PIR_INIT_TIME) {
         pir_init = true;
-        digitalWrite(led_pin, LOW);
-        delay(20);
-        digitalWrite(led_pin, HIGH);
       }
     }
   }
