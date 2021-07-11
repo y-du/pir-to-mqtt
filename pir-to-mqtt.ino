@@ -56,8 +56,8 @@ void setup() {
   digitalWrite(led_pin, HIGH);
 }
 
-
 unsigned long now{0};
+unsigned long first_reading{0};
 unsigned long last_reconnect{0};
 byte motion{false};
 byte pir_init{false};
@@ -82,12 +82,22 @@ void loop() {
     if (pir_init) {
       if (digitalRead(pir_pin) == HIGH) {
         if (motion == false) {
-          motion = true;
-        }
-        now = millis();
-        if (now - last_msg >= PUP_INTERVAL) {
-          mqtt_client.publish(topic.c_str(), "1");
-          last_msg = now;
+          first_reading = millis();
+          while ((millis() - first_reading) <= DET_DELAY) {
+            delay(DET_LOOP_DELAY);
+            if (digitalRead(pir_pin) == HIGH) {
+              motion = true;
+            } else {
+              motion = false;
+              break;
+            }
+          }
+        } else {
+          now = millis();
+          if (now - last_msg >= PUP_INTERVAL) {
+            mqtt_client.publish(topic.c_str(), "1");
+            last_msg = now;
+          } 
         }
       } else {
         if (motion == true) {
